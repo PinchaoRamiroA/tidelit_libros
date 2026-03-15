@@ -1,16 +1,13 @@
-FROM php:8.2-cli
+FROM php:8.3.6
 
-# instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libpq-dev \
     libzip-dev
 
-# instalar extensiones php
-RUN docker-php-ext-install pdo pdo_pgsql
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
-# instalar composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
