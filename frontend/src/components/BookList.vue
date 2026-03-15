@@ -1,33 +1,24 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Book } from '../models/Book'
+import { useBookStore } from '../stores/book'
 
-const books = ref([])
+const bookStore = useBookStore()
 const loading = ref(false)
 const error = ref(null)
 
 const fetchBooks = async () => {
+  if (loading.value) return
   loading.value = true
   error.value = null
   try {
-    const response = await fetch('/api/books')
-    if (!response.ok) {
-      throw new Error(`Error fetching books: ${response.status} ${response.statusText}`)
-    }
-    const data = await response.json()
-    const rawBooks = data.data || data
-    if (!Array.isArray(rawBooks)) {
-      throw new Error('Invalid format: expected an array')
-    }
-    books.value = rawBooks.map(item => new Book(item))
+    await bookStore.chargeBooks()
   } catch (err) {
     error.value = err.message
   } finally {
     loading.value = false
   }
 }
-
-onMounted(() => {
+onMounted(async () => {
   fetchBooks()
 })
 </script>
@@ -43,12 +34,12 @@ onMounted(() => {
       {{ error }}
     </div>
 
-    <div v-else-if="loading && books.length === 0" class="loading-msg">
+    <div v-else-if="loading && bookStore.books.length === 0" class="loading-msg">
       Loading books...
     </div>
 
     <ul v-else class="book-list">
-      <li v-for="book in books" :key="book.id" class="book-item">
+      <li v-for="book in bookStore.books" :key="book.id" class="book-item">
         <div class="book-info">
           <span class="book-title">{{ book.title }}</span>
           <br>
@@ -63,7 +54,7 @@ onMounted(() => {
       </li>
     </ul>
     
-    <div v-if="!loading && books.length === 0 && !error" class="empty-msg">
+    <div v-if="!loading && bookStore.books.length === 0 && !error" class="empty-msg">
       No books available.
     </div>
   </div>
