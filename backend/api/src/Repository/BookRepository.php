@@ -16,6 +16,17 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    public function findAllWithAverageRating(): array
+    {
+        return $this->createQueryBuilder('b')
+            ->leftJoin('b.reviews', 'r')
+            ->select('b.id, b.title, b.author, b.publishedYear')
+            ->addSelect('AVG(r.rating) as average_rating')
+            ->groupBy('b.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Book[] Returns an array of Book objects
     //     */
