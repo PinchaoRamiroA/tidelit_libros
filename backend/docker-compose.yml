@@ -1,0 +1,31 @@
+services:
+
+  database:
+    image: postgres:latest
+    container_name: tidelit_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: books
+      POSTGRES_USER: db_symfony
+      POSTGRES_PASSWORD: db_symfony
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: tidelit_backend
+    volumes:
+      - ./api:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "postgresql://symfony:symfony@database:5432/books?serverVersion=15&charset=utf8"
+
+volumes:
+  postgres_data:
