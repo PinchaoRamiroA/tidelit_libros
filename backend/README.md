@@ -19,27 +19,32 @@ Dependiendo de si deseas usar Docker o ejecutar el proyecto manualmente, necesit
 
 ## Opción 1: Ejecutar con Docker (Recomendado)
 
-El uso de Docker te permite levantar la base de datos y el servidor web preconfigurados rápidamente, sin tener que instalar PHP y PostreSQL localmente.
+El uso de Docker permite levantar la base de datos y el servidor web preconfigurados rápidamente, sin tener que instalar PHP y PostreSQL localmente.
 
-1. **Inicia los contenedores en segundo plano:**
+1. Copia el archivo .env.example a .env
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Inicia los contenedores en segundo plano:**
    Desde el directorio `backend` ejecuta:
    ```bash
    docker-compose up -d --build
    ```
    > Esto levantará un contenedor `tidelit_postgres` en el puerto `5432` y un contenedor `tidelit_backend` en el puerto `8000`.
 
-2. **Instala las dependencias de Composer:**
+4. **Instala las dependencias de Composer:**
    Accede al contenedor del backend e instala las librerías:
    ```bash
    docker exec -it tidelit_backend composer install
    ```
 
-3. **Ejecuta las migraciones de la base de datos:**
+5. **Ejecuta las migraciones de la base de datos:**
    ```bash
    docker exec -it tidelit_backend php bin/console doctrine:migrations:migrate --no-interaction
    ```
 
-4. **Acceso al Backend:**
+6. **Acceso al Backend:**
    Una vez configurado, podrás acceder a la API a través de:
    [http://localhost:8000](http://localhost:8000)
 
