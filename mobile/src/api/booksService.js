@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 // For iOS simulator and web, localhost is fine. If using a physical device, this should be the computer's local IP.
 const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 const API_URL = process.env.EXPO_PUBLIC_API_URL || `http://[IP_ADDRESS]`;
-
+console.log(API_URL)
 const api = axios.create({
   baseURL: API_URL,
   timeout: 10000,

@@ -27,7 +27,7 @@ Dependiendo de la parte del proyecto que quieras correr, necesitarás:
 
 1. **Clona el repositorio** y entra en la carpeta principal:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/PinchaoRamiroA/tidelit_libros.git
    cd tidelit_libros/backend
    ```
 
@@ -107,6 +107,7 @@ La aplicación móvil está construida con **React Native** usando el framework 
 ### Listar Libros
 - **Endpoint:** `GET /api/books`
 - **Descripción:** Obtiene un listado de libros con sus evaluaciones promedio.
+- **Elección de rating como null:** Se decidió que el rating sea null en caso de que no haya reseñas, en lugar de 0. Porque cuando se usa 0 puede confundirse con una reseña de 0 estrellas.
 - **Ejemplo de Respuesta:**
   ```json
     [
@@ -178,8 +179,8 @@ Si se envía una petición incorrecta (por ejemplo, publicando un `rating` mayor
 ---
 
 ## 📹 Video Evidencia
-- **Enlace de funcionamiento (Vue y React Native):** [Añade el enlace aquí (YouTube / Drive)]
+- **Enlace de funcionamiento (Vue y React Native):** [https://drive.google.com/file/d/1lanuOWaTRQNpcROXaL4Km_0HaCEGapgW/view?usp=drive_link]
 
 ## 📋 Información de Evaluación
-- **Branch Evaluado:** [Nombre_de_Rama_Ej_main]
-- **Commit Final:** [Hash_del_Commit_Ej_7a8b9c]
+- **Branch Evaluado:** [main]
+- **Commit Final:** [a773139ca3b1424054aa7b608f5042393160fb11]
